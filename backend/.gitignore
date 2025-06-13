@@ -23,3 +23,14 @@ dist-ssr
 *.sln
 *.sw?
 .env
+
+cert.pem
+key.pem
+fullchain.pem
+*.crt
+*.key
+
+*.pem
+*.key
+*.crt
+ssl/

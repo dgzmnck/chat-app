@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import express from "express";
 
+import path from "path";
 import { Server } from "socket.io";
 import cors from "cors";
 
@@ -11,13 +12,19 @@ import initDB from "./db/initDB.js";
 
 const app = express();
 
-console.log("DB_PASSWORD type:", typeof process.env.PG_PASSWORD);
+console.log("PG_PASSWORD type:", typeof process.env.PG_PASSWORD);
 // SSL
 import fs from "fs";
 import http from "http";
 import https from "https";
-var privateKey = fs.readFileSync("/sslcert/nwssu.edu.ph.key", "utf8");
-var certificate = fs.readFileSync("/sslcert/nwssu.edu.ph.pem.crt", "utf8");
+
+const keyPath = path.resolve("./etc/sslcert/nwssu.edu.ph.key");
+const certPath = path.resolve("./etc/sslcert/nwssu.edu.ph.cert");
+
+console.log("🔐 Key path:", keyPath);
+
+var privateKey = fs.readFileSync("./etc/sslcert/nwssu.edu.ph.key", "utf8");
+var certificate = fs.readFileSync("./etc/sslcert/nwssu.edu.ph.pem.crt", "utf8");
 var credentials = { key: privateKey, cert: certificate };
 
 var httpServer = http.createServer(app);
