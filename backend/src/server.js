@@ -1,17 +1,29 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
-import http from "http";
+
 import { Server } from "socket.io";
 import cors from "cors";
-import dotenv from "dotenv";
+
 import messageRoutes from "./routes/messageRoutes.js";
 import { saveMessage } from "./services/messageService.js";
 import initDB from "./db/initDB.js";
-dotenv.config();
 
 const app = express();
-const server = http.createServer(app);
 
-const io = new Server(server, {
+console.log("DB_PASSWORD type:", typeof process.env.PG_PASSWORD);
+// SSL
+import fs from "fs";
+import http from "http";
+import https from "https";
+var privateKey = fs.readFileSync("/sslcert/nwssu.edu.ph.key", "utf8");
+var certificate = fs.readFileSync("/sslcert/nwssu.edu.ph.pem.crt", "utf8");
+var credentials = { key: privateKey, cert: certificate };
+
+var httpServer = http.createServer(app);
+var httpsServer = https.createServer(credentials, app);
+
+const io = new Server(httpsServer, {
   cors: {
     origin: process.env.CLIENT_URL || "http://localhost:5173",
     methods: ["GET", "POST"],
@@ -41,6 +53,10 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(3000, () => {
-  console.log("✅ Server running on http://localhost:3000");
+httpServer.listen(3000, () => {
+  console.log("http server runnnig port 3000");
+});
+
+httpsServer.listen(443, () => {
+  console.log("https server runnnig port 443");
 });

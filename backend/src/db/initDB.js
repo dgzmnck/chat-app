@@ -1,23 +1,30 @@
-import pkg from "pg";
-const { Pool } = pkg;
 import dotenv from "dotenv";
 dotenv.config();
+import pkg from "pg";
+const { Pool } = pkg;
+console.log(process.env.ADMIN_DB_URL);
 
 const adminPool = new Pool({ connectionString: process.env.ADMIN_DB_URL });
 const targetDb = process.env.DATABASE_NAME;
 
 const createDatabaseIfNotExists = async () => {
-  const res = await adminPool.query(
-    `SELECT 1 FROM pg_database WHERE datname = $1`,
-    [targetDb]
-  );
-  if (res.rowCount === 0) {
-    await adminPool.query(`CREATE DATABASE ${targetDb}`);
-    console.log(`✅ Database created: ${targetDb}`);
-  } else {
-    console.log(`📦 Database already exists: ${targetDb}`);
+  try {
+    const res = await adminPool.query(
+      `SELECT 1 FROM pg_database WHERE datname = $1`,
+      [targetDb]
+    );
+
+    if (res.rowCount === 0) {
+      await adminPool.query(`CREATE DATABASE ${targetDb}`);
+      console.log(`✅ Database created: ${targetDb}`);
+    } else {
+      console.log(`📦 Database already exists: ${targetDb}`);
+    }
+  } catch (err) {
+    console.error("❌ Failed to check/create database:", err.message);
+  } finally {
+    await adminPool.end();
   }
-  await adminPool.end();
 };
 
 const createTable = async () => {
