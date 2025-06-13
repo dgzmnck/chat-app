@@ -5,7 +5,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import messageRoutes from "./routes/messageRoutes.js";
 import { saveMessage } from "./services/messageService.js";
-
+import initDB from "./db/initDB.js";
 dotenv.config();
 
 const app = express();
@@ -17,6 +17,8 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
   },
 });
+
+await initDB();
 
 app.use(cors());
 app.use(express.json());
