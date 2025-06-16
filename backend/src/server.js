@@ -60,10 +60,10 @@ io.on("connection", (socket) => {
   });
 });
 
-httpServer.listen(3000, () => {
+httpServer.listen(8080, () => {
   console.log("http server runnnig port 3000");
 });
 
-httpsServer.listen(443, () => {
+httpsServer.listen(8443, () => {
   console.log("https server runnnig port 443");
 });
