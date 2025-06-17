@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 import axios from "axios";
 
-const API_URL = "https://localhost:8443";
-const socket = io("https://localhost:8443");
+const API_URL = import.meta.env.VITE_API_URL;
+const socket = io(API_URL);
 
 const Chat = () => {
   const [sender, setSender] = useState("");
