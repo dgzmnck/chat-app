@@ -20,19 +20,16 @@ var httpServer = http.createServer(app);
 var httpsServer = https.createServer(credentials, app);
 const io = new Server(httpsServer, {
   cors: {
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin: process.env.CLIENT_URL || "https://localhost:5173",
     methods: ["GET", "POST"],
   },
 });
 await initDB();
-
 app.use(cors());
 app.use(express.json());
-app.use("/api/messages", messageRoutes);
-
+app.use("/", messageRoutes);
 io.on("connection", (socket) => {
   console.log("🔌 User connected");
-
   socket.on("chat-message", async ({ sender, message }) => {
     try {
       await saveMessage(sender, message);
@@ -48,9 +45,9 @@ io.on("connection", (socket) => {
 });
 
 httpServer.listen(8080, () => {
-  console.log("http server runnnig port 3000");
+  console.log("http server runnnig port 8080");
 });
 
 httpsServer.listen(8443, () => {
-  console.log("https server runnnig port 443");
+  console.log("https server runnnig port 8443");
 });

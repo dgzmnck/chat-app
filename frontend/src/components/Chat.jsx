@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 import axios from "axios";
 
-const API_URL = "https://apichat.nwssu.edu.ph";
-const socket = io("https://apichat.nwssu.edu.ph")
+const API_URL = "https://localhost:8443";
+const socket = io("https://localhost:8443");
 
 const Chat = () => {
   const [sender, setSender] = useState("");
@@ -16,6 +16,8 @@ const Chat = () => {
     const loadMessages = async () => {
       try {
         const res = await axios.get(API_URL, { params: { limit: 50, offset: 0 } });
+        console.log("Raw API response:", res.data);
+
         setMessages(res.data.reverse());
       } catch (err) {
         console.error("Failed to load messages:", err);
