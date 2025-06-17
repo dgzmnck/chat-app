@@ -5,10 +5,9 @@ import express from "express";
 import path from "path";
 import { Server } from "socket.io";
 import cors from "cors";
-
-import messageRoutes from "./routes/messageRoutes.js";
-import { saveMessage } from "./services/messageService.js";
-import initDB from "./db/initDB.js";
+import messageRoutes from "./src/routes/messageRoutes.js";
+import { saveMessage } from "./src/services/messageService.js";
+import initDB from "./src/db/initDB.js";
 
 const app = express();
 
