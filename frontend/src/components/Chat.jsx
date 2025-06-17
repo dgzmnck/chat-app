@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 import axios from "axios";
 
-const API_URL = "https://api.chat.nwssu.edu.ph/api/messages";
-const socket = io("https://api.chat.nwssu.edu.ph")
+const API_URL = "https://apichat.nwssu.edu.ph";
+const socket = io("https://apichat.nwssu.edu.ph")
 
 const Chat = () => {
   const [sender, setSender] = useState("");
