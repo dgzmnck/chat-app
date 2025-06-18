@@ -5,11 +5,7 @@ import axios from "axios";
 const API_URL = import.meta.env.VITE_API_URL;
 
 
-const socket = io(API_URL, {
-  path: "/socket.io",
-  transports: [ "polling"]
-});
-
+const socket = io(API_URL);
 
 
 const Chat = () => {
