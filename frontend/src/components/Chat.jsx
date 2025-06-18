@@ -5,9 +5,9 @@ import axios from "axios";
 const API_URL = import.meta.env.VITE_API_URL;
 
 
-// const socket = io(API_URL);
+const socket = io(API_URL);
 
-const socket = io("https://apichat.nwssu.edu.ph", { transports: ["websocket"] });
+// const socket = io("https://apichat.nwssu.edu.ph", { transports: ["websocket"] });
 const Chat = () => {
   const [sender, setSender] = useState("");
   const [message, setMessage] = useState("");
