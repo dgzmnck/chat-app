@@ -3,16 +3,16 @@ import { io } from "socket.io-client";
 import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_URL;
+// const SOCKET = import.meta.env.VITE_SOCKET;
 
-
-// const socket = io(API_URL);
+const socket = io(API_URL);
 
 // const socket = io("https://apichat.nwssu.edu.ph", { transports: ["websocket"] });
 
 
-const socket = io(API_URL, {
-    transports: ["websocket"]
-});
+// const socket = io(API_URL, {
+//     transports: ["websocket"]
+// });
 
 
 const Chat = () => {
